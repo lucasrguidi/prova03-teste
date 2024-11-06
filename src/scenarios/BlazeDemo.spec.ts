@@ -1,27 +1,27 @@
 import { test } from '@playwright/test';
 import { join } from 'path';
 import { TheConfig } from 'sicolo';
-import CadastroPage from '../support/pages/CadastroPage';
+import ComprarVooPage from '../support/pages/ComprarVooPage';
 
-test.describe('Sauce Demo', () => {
+test.describe('Blaze Demo', () => {
   const CONFIG = join(__dirname, '../support/fixtures/config.yml');
-  let cadastroPage: CadastroPage;
+  let comprarVooPage: ComprarVooPage;
   let BASE_URL = TheConfig.fromFile(CONFIG)
-    .andPath('application.sauceDemo')
+    .andPath('application.blazeDemo')
     .retrieveData();
 
   if (process.env.QA) {
     BASE_URL = TheConfig.fromFile(CONFIG)
-      .andPath('application.sauceDemo')
+      .andPath('application.blazeDemo')
       .retrieveData();
   }
 
   test.beforeEach(async ({ page }) => {
-    cadastroPage = new CadastroPage(page);
+    comprarVooPage = new ComprarVooPage(page);
     await page.goto(BASE_URL);
   });
 
-  test('Validação do carrinho', async () => {
-    await cadastroPage.validarCarrinho();
+  test('Validação de compra de passagem de voo', async () => {
+    await comprarVooPage.comprarVoo();
   });
 });
